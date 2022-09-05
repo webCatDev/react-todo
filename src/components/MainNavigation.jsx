@@ -1,8 +1,8 @@
+
 const MainNavigation = () => {
     return (
-        <div>
-            Enter
-        </div>
+        <>
+        </>
     );
 }
 
