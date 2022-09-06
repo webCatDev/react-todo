@@ -1,15 +1,13 @@
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
-import MainNavigation from "../components/MainNavigation";
+import Layout from "../components/Layout";
 
 const Home = () => {
-
   return (
-    <>
+    <Layout>
       <TodoForm />
       <TodoList />
-      <MainNavigation />
-    </>
+    </Layout>
   );
 };
 

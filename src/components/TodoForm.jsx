@@ -5,7 +5,7 @@ import { v4 } from "uuid";
 const uuid = v4;
 
 const TodoForm = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
     let todo = event.target.todo.value;

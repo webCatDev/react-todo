@@ -1,0 +1,51 @@
+:root {
+  --black-900: hsl(0, 0%, 4%);
+  --black-800: hsl(0, 0%, 6%);
+  --black-700: hsl(0, 0%, 10%);
+  --black-600: hsl(0, 0%, 14%);
+  --black-500: hsl(0, 0%, 16%);
+  --black-400: hsl(0, 0%, 18%);
+  --black-300: hsl(0, 0%, 24%);
+  --black-200: hsl(0, 0%, 34%);
+  --black-100: hsla(0, 0%, 44%, 0.63);
+
+  --white: rgb(241, 233, 233);
+}
+
+html {
+  --body-background-color: var(--white);
+  --main-color: var(--black-900);
+}
+
+html[data-theme="dark"] {
+  --body-background-color: var(--black-900);
+  --main-color: var(--white)
+}
+
+body {
+  margin: 0;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--body-background-color);
+  color:var(--main-color)
+}
+
+.main-container {
+  header {
+    display: flex;
+    align-items: center;
+
+    h1 {
+      font-weight: 900;
+    }
+  }
+
+  main {
+  }
+
+  footer {
+  }
+}

@@ -47,7 +47,7 @@ export const todoSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addTodo.fulfilled, (state, action) => {
-      state.data = [...state.data, action.payload]
+      state.data = [...state.data, action.payload];
       state.loading = false;
     });
     builder.addCase(addTodo.rejected, (state, action) => {
@@ -59,9 +59,11 @@ export const todoSlice = createSlice({
       state.error = "";
       state.loading = true;
     });
-      builder.addCase(updateTodo.fulfilled, (state, action) => {
-    const todoIndex = state.data.findIndex(todo => todo.id === action.payload.id)
-      state.data[todoIndex] = action.payload
+    builder.addCase(updateTodo.fulfilled, (state, action) => {
+      const todoIndex = state.data.findIndex(
+        (todo) => todo.id === action.payload.id
+      );
+      state.data[todoIndex] = action.payload;
       state.loading = false;
     });
     builder.addCase(updateTodo.rejected, (state, action) => {
@@ -88,9 +90,9 @@ export const addTodo = createAsyncThunk(
 
 export const updateTodo = createAsyncThunk(
   "updateTodo",
-    async ({ todoId, todo }) => {
-        const updated = await TodoAPI.updateTodo(todoId, todo)
-        console.log(updated);
-        return updated
-    }
+  async ({ todoId, todo }) => {
+    const updated = await TodoAPI.updateTodo(todoId, todo);
+    console.log(updated);
+    return updated;
+  }
 );
