@@ -4,11 +4,11 @@ import { uiActions } from "../store/uiSlice";
 import { createPortal } from "react-dom";
 
 import { ThemeProvider, createTheme } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
+
 
 const Layout = ({ children }) => {
   const { isDarkMode } = useSelector((state) => state.ui);
-
+  console.log(isDarkMode)
   const theme = createTheme({
     palette: {
       mode: isDarkMode ? "dark" : "light",
@@ -26,7 +26,6 @@ const Layout = ({ children }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline/>
       <div className="main-container">
         <header>
           <h1>Webcat Task Manager</h1>
