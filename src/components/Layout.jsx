@@ -5,10 +5,9 @@ import { createPortal } from "react-dom";
 
 import { ThemeProvider, createTheme } from "@mui/material";
 
-
 const Layout = ({ children }) => {
   const { isDarkMode } = useSelector((state) => state.ui);
-  console.log(isDarkMode)
+  console.log(isDarkMode);
   const theme = createTheme({
     palette: {
       mode: isDarkMode ? "dark" : "light",
@@ -20,8 +19,12 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
     const html = document.querySelector("html");
-    const { theme } = html.dataset;
-    html.dataset.theme = theme === "dark" ? "" : "dark";
+
+    if (isDarkMode) {
+      html.dataset.theme = "dark";
+    } else {
+      html.dataset.theme = "";
+    }
   }, [isDarkMode]);
 
   return (
