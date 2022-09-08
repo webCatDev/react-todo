@@ -29,12 +29,16 @@ const Layout = ({ children }) => {
           {createPortal(
             <button className="dark-mode-btn" onClick={toggleDarkMode}>
               {!isDarkMode ? "🌙" : "🌞"}
-            </button>, document.body
+            </button>,
+            document.body
           )}
         </header>
         <main>{children}</main>
         <footer>
-          <p>{`<Designed by webcatdev 🐱‍👤 />`}</p>
+          <p>
+            {`<Designed by webcatdev`}
+            <span className="ninja-cat">🐱‍👤</span> {`/>`}
+          </p>
         </footer>
       </div>
     </ThemeProvider>

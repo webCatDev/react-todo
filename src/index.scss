@@ -25,7 +25,7 @@ html {
   --body-background-color: var(--white);
   --main-color: var(--black-900);
   --main-container-bg: rgba(255, 255, 255, 0.308);
-  
+
   --task-all-color: #1976d2;
   --task-all-bg: hsla(210, 79%, 46%, 0.103);
   --task-completed-color: #19b10b;
@@ -36,14 +36,15 @@ html {
   --task-count-bg: rgb(223, 220, 217);
   --buttons-hover-color: var(--black-700);
   --buttons-color: var(--black-100);
-}
 
+  --selection-color: wheat;
+}
 
 html[data-theme="dark"] {
   --body-background-color: var(--black-900);
   --main-color: var(--white);
   --main-container-bg: var(--black-700);
-  
+
   --task-all-bg: #06b0c7e8;
   --task-all-color: var(--white);
   --task-completed-bg: #37c42bf5;
@@ -53,9 +54,12 @@ html[data-theme="dark"] {
   --task-count-bg: var(--white-100);
   --buttons-hover-color: var(--white);
   --buttons-color: var(--white-100);
+
+  --selection-color: cornflowerblue;
 }
 
 body {
+
   min-height: 100vh;
   display: grid;
   place-items: center;
@@ -69,6 +73,9 @@ body {
   color: var(--main-color);
 }
 
+::selection {
+  background-color: var(--selection-color);
+}
 
 .main-container {
   background-color: var(--main-container-bg);
@@ -93,6 +100,17 @@ body {
       padding: 0.5rem 0;
       text-align: center;
     }
+
+    .ninja-cat {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transform-origin: bottom;
+}
+p:hover .ninja-cat {
+  animation: bounce 1s infinite cubic-bezier(0.280, 0.840, 0.420, 1);
+}
   }
 }
 
@@ -113,7 +131,8 @@ body {
     display: flex;
     justify-content: space-between;
 
-    .todo-text, button {
+    .todo-text,
+    button {
       cursor: pointer;
     }
 
@@ -124,7 +143,7 @@ body {
 
       color: var(--buttons-color);
     }
-    
+
     button:hover {
       color: var(--buttons-hover-color);
     }
@@ -136,13 +155,13 @@ body {
 }
 
 .filter-buttons {
-  margin-top:1rem ;
+  margin-top: 1rem;
   display: flex;
 
-    a {
-  text-decoration: none;
-  flex: 1;
-}
+  a {
+    text-decoration: none;
+    flex: 1;
+  }
   // align-items: center;
   button {
     width: 100%;
@@ -157,28 +176,21 @@ body {
     font-weight: 600;
     cursor: pointer;
 
-  
-
-
     &.all {
       color: var(--task-all-color);
-      background-color:var(--task-all-bg) ;
+      background-color: var(--task-all-bg);
     }
     &.completed {
       color: var(--task-completed-color);
-      background-color:var(--task-completed-bg) ;
+      background-color: var(--task-completed-bg);
     }
     &.uncompleted {
       color: var(--task-uncompleted-color);
-      background-color:var(--task-uncompleted-bg) ;
+      background-color: var(--task-uncompleted-bg);
     }
 
-    
-
-
-
     &.active {
-border-bottom: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
     }
   }
 
@@ -201,7 +213,7 @@ border-bottom: 2px solid currentColor;
   left: 50%;
   bottom: 1%;
   transform: translateX(-50%);
-  opacity: .3;
+  opacity: 0.3;
   border-radius: 100px;
   border: 1px solid var(--black-100);
   z-index: 2;
@@ -211,5 +223,43 @@ border-bottom: 2px solid currentColor;
 }
 
 .dark-mode-btn:hover {
-opacity: 1
+  opacity: 1;
+}
+
+.modal {
+  padding: .5rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background-color: var(--black-800);
+  color: var(--white);
+  position: fixed;
+  top: 5vh;
+  right: -100%;
+  z-index: 3;
+}
+
+
+
+@keyframes bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-3px);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(-1px);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
 }

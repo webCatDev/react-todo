@@ -18,7 +18,7 @@ const TodoListItem = ({ todo, isEditing, setIsEditing }) => {
     isEditing.state === true && isEditing.todoId === todo.id;
 
   return (
-    <li>
+    <li className="todo-list-item">
       {isEditingCurrentTodo && (
         <UpdateForm setIsEditing={setIsEditing} todo={todo} />
       )}

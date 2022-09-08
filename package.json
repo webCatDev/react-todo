@@ -11,6 +11,7 @@
     "@testing-library/react": "*",
     "@testing-library/user-event": "*",
     "axios": "^0.27.2",
+    "gsap": "^3.11.1",
     "react": "*",
     "react-dom": "*",
     "react-redux": "^8.0.2",

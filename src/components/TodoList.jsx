@@ -1,6 +1,6 @@
 import { getTodos } from "../store/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import TodoListItem from "./TodoListItem";
 import FilterButtons from "./FilterButtons";
@@ -10,6 +10,10 @@ import { Pagination, PaginationItem } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 import { ITEM_PER_PAGE } from "../config";
 
+import {gsap} from 'gsap'
+import Modal from "./Modal";
+import { createPortal } from "react-dom";
+
 const TodoList = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
@@ -18,9 +22,23 @@ const TodoList = () => {
   const todos = useSelector((state) => state.todos);
   const [filteredTodos, setFilteredTodos] = useState(todos.data);
   const dispatch = useDispatch();
-  
+
   const [active, setActive] = useState("all");
   const [isEditing, setIsEditing] = useState({ todoId: null, state: false });
+
+
+  const todoListRef = useRef();
+  const qsa = gsap.utils.selector(todoListRef)
+
+   
+  
+  useEffect(() => {
+      gsap.from(qsa(".todo-list-item"), {
+        x: -20,
+        opacity: 0,
+        stagger: 0.1,
+      });
+  }, [active, page]);
 
   useEffect(() => {
     switch (active) {
@@ -38,19 +56,33 @@ const TodoList = () => {
     }
   }, [todos.data]);
 
-
   useEffect(() => {
     dispatch(getTodos());
   }, [dispatch]);
 
   return (
     <div className="todo-container">
-      <FilterButtons onActive={setActive} todos={todos.data} setTodos={setFilteredTodos} />
-      <TodoNotifications todos={todos} />
-      <ul>
-        {filteredTodos.slice((page - 1) * ITEM_PER_PAGE, page * ITEM_PER_PAGE).map((todo) => (
-          <TodoListItem isEditing={isEditing} setIsEditing={setIsEditing} key={todo.id} todo={todo} />
-        ))}
+      <FilterButtons
+        onActive={setActive}
+        todos={todos.data}
+        setTodos={setFilteredTodos}
+      />
+      {createPortal(
+        <Modal todos={todos}>
+          <TodoNotifications todos={todos} />
+        </Modal>, document.body
+      )}
+      <ul ref={todoListRef}>
+        {filteredTodos
+          .slice((page - 1) * ITEM_PER_PAGE, page * ITEM_PER_PAGE)
+          .map((todo) => (
+            <TodoListItem
+              isEditing={isEditing}
+              setIsEditing={setIsEditing}
+              key={todo.id}
+              todo={todo}
+            />
+          ))}
       </ul>
       <Pagination
         page={page}
