@@ -1,3 +1,11 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   --black-900: hsl(0, 0%, 4%);
   --black-800: hsl(0, 0%, 6%);
@@ -10,19 +18,47 @@
   --black-100: hsla(0, 0%, 44%, 0.63);
 
   --white: rgb(241, 233, 233);
+  --white-100: rgba(235, 225, 225, 0.274);
 }
 
 html {
   --body-background-color: var(--white);
   --main-color: var(--black-900);
+  --main-container-bg: rgba(255, 255, 255, 0.308);
+  
+  --task-all-color: #1976d2;
+  --task-all-bg: hsla(210, 79%, 46%, 0.103);
+  --task-completed-color: #19b10b;
+  --task-completed-bg: hsla(115, 88%, 37%, 0.103);
+  --task-uncompleted-color: #d21919;
+  --task-uncompleted-bg: hsla(0, 79%, 46%, 0.103);
+
+  --task-count-bg: rgb(223, 220, 217);
+  --buttons-hover-color: var(--black-700);
+  --buttons-color: var(--black-100);
 }
+
 
 html[data-theme="dark"] {
   --body-background-color: var(--black-900);
-  --main-color: var(--white)
+  --main-color: var(--white);
+  --main-container-bg: var(--black-700);
+  
+  --task-all-bg: #06b0c7e8;
+  --task-all-color: var(--white);
+  --task-completed-bg: #37c42bf5;
+  --task-completed-color: var(--white);
+  --task-uncompleted-bg: #df2525;
+  --task-uncompleted-color: var(--white);
+  --task-count-bg: var(--white-100);
+  --buttons-hover-color: var(--white);
+  --buttons-color: var(--white-100);
 }
 
 body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
   margin: 0;
   font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -30,13 +66,19 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--body-background-color);
-  color:var(--main-color)
+  color: var(--main-color);
 }
 
+
 .main-container {
+  background-color: var(--main-container-bg);
+  padding: 2rem;
+  max-width: 40rem;
+
   header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
     h1 {
       font-weight: 900;
@@ -47,5 +89,127 @@ body {
   }
 
   footer {
+    p {
+      padding: 0.5rem 0;
+      text-align: center;
+    }
   }
+}
+
+.add-task-form {
+  input {
+    padding: 0.5rem;
+  }
+}
+
+.todo-container {
+  ul:not(.MuiPagination-ul) {
+    padding: 0.5rem;
+    list-style: none;
+    height: 17rem;
+  }
+
+  li {
+    display: flex;
+    justify-content: space-between;
+
+    .todo-text, button {
+      cursor: pointer;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      padding: 1em 2em;
+
+      color: var(--buttons-color);
+    }
+    
+    button:hover {
+      color: var(--buttons-hover-color);
+    }
+  }
+
+  .MuiPagination-ul {
+    padding: 1rem 0;
+  }
+}
+
+.filter-buttons {
+  margin-top:1rem ;
+  display: flex;
+
+    a {
+  text-decoration: none;
+  flex: 1;
+}
+  // align-items: center;
+  button {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid transparent;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    transition: all 500ms ease;
+    font-weight: 600;
+    cursor: pointer;
+
+  
+
+
+    &.all {
+      color: var(--task-all-color);
+      background-color:var(--task-all-bg) ;
+    }
+    &.completed {
+      color: var(--task-completed-color);
+      background-color:var(--task-completed-bg) ;
+    }
+    &.uncompleted {
+      color: var(--task-uncompleted-color);
+      background-color:var(--task-uncompleted-bg) ;
+    }
+
+    
+
+
+
+    &.active {
+border-bottom: 2px solid currentColor;
+    }
+  }
+
+  .count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--task-count-bg);
+    border-radius: 20px;
+    width: 25px;
+    height: 25px;
+    padding: 5px;
+  }
+}
+
+.dark-mode-btn {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  left: 50%;
+  bottom: 1%;
+  transform: translateX(-50%);
+  opacity: .3;
+  border-radius: 100px;
+  border: 1px solid var(--black-100);
+  z-index: 2;
+  cursor: pointer;
+  transition: 500ms ease all;
+  background-color: var(--white-100);
+}
+
+.dark-mode-btn:hover {
+opacity: 1
 }

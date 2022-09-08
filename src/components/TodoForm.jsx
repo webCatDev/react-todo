@@ -14,13 +14,14 @@ const TodoForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="add-task-form" onSubmit={handleSubmit}>
       <TextField
         id="standard-basic"
-        label="Todo"
+        label="Your Task"
         name="todo"
         variant="standard"
         placeholder="Enter something to do"
+        required
       />
     </form>
   );

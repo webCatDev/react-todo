@@ -1,6 +1,5 @@
 // hooks
 import { useDispatch } from "react-redux";
-import { useState } from "react";
 
 // action creators
 import { deleteTodo } from "../store/todoSlice";
@@ -9,11 +8,11 @@ import { deleteTodo } from "../store/todoSlice";
 import TodoText from "./TodoText";
 import UpdateForm from "./UpdateForm";
 
-const TodoListItem = ({ todo }) => {
+const TodoListItem = ({ todo, isEditing, setIsEditing }) => {
   const dispatch = useDispatch();
-  const [isEditing, setIsEditing] = useState({ todoId: null, state: false });
+  
 
-  const handleEdit = (id) => setIsEditing(() => ({ state: true, todoId: id }));
+  const handleEdit = (id) => setIsEditing({ state: !isEditing.state, todoId: id });
 
   const isEditingCurrentTodo =
     isEditing.state === true && isEditing.todoId === todo.id;
@@ -24,9 +23,12 @@ const TodoListItem = ({ todo }) => {
         <UpdateForm setIsEditing={setIsEditing} todo={todo} />
       )}
       {!isEditingCurrentTodo && <TodoText todo={todo} />}
-
-      <button onClick={() => handleEdit(todo.id)}>Update Todo</button>
-      <button onClick={() => dispatch(deleteTodo(todo.id))}>Delete Todo</button>
+      <div>
+        <button onClick={() => handleEdit(todo.id)}>{`${!isEditingCurrentTodo ? 'Edit' : 'Cancel'}`}</button>
+        <button onClick={() => dispatch(deleteTodo(todo.id))}>
+          Delete
+        </button>
+      </div>
     </li>
   );
 };

@@ -4,6 +4,7 @@ const TodoText = ({ todo }) => {
     const dispatch = useDispatch()
   return (
     <span
+      className="todo-text"
       style={{
         textDecoration: `${todo.isCompleted ? "line-through" : ""}`,
       }}
