@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import {gsap} from 'gsap'
 
 const Modal = ({ children, todos }) => {
-    const modalTl = gsap.timeline()
+    const modalTl = useMemo(()=>  gsap.timeline() , [] )
 
     const modalRef = useRef()
     useEffect(() => {
@@ -19,7 +19,7 @@ const Modal = ({ children, todos }) => {
                 duration: 0.5,
               });
         }
-    }, [todos.error, todos.loading])
+    }, [todos.error, todos.loading, modalTl])
     return (
         <section ref={modalRef} className="modal">
             {children}

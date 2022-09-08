@@ -1,7 +1,5 @@
 import Home from "./pages/Home";
 
-import { useSelector } from "react-redux";
-
 function App() {
 
   

@@ -1,6 +1,6 @@
 import { getTodos } from "../store/todoSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 
 import TodoListItem from "./TodoListItem";
 import FilterButtons from "./FilterButtons";
@@ -28,7 +28,7 @@ const TodoList = () => {
 
 
   const todoListRef = useRef();
-  const qsa = gsap.utils.selector(todoListRef)
+  const qsa = useMemo(()=> gsap.utils.selector(todoListRef), [todoListRef])
 
    
   
@@ -38,7 +38,7 @@ const TodoList = () => {
         opacity: 0,
         stagger: 0.1,
       });
-  }, [active, page]);
+  }, [active, page, qsa]);
 
   useEffect(() => {
     switch (active) {
@@ -54,7 +54,7 @@ const TodoList = () => {
       default:
         setFilteredTodos(todos.data);
     }
-  }, [todos.data]);
+  }, [todos.data, active]);
 
   useEffect(() => {
     dispatch(getTodos());
