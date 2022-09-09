@@ -1,9 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../store/uiSlice";
 import { createPortal } from "react-dom";
 
 import { ThemeProvider, createTheme } from "@mui/material";
+import UsernameForm from "./UsernameForm";
+import CatIcon from "./CatIcon";
 
 const Layout = ({ children }) => {
   const { isDarkMode } = useSelector((state) => state.ui);
@@ -26,12 +28,18 @@ const Layout = ({ children }) => {
       html.dataset.theme = "";
     }
   }, [isDarkMode]);
+const initialState = localStorage.getItem("username") || "";
+const [username, setUsername] = useState(initialState);
+
 
   return (
     <ThemeProvider theme={theme}>
       <div className="main-container">
         <header>
-          <h1>Webcat Task Manager</h1>
+          {!username && (
+            <UsernameForm username={username} setUsername={setUsername} />
+          )}
+          {!!username && <h1>{`Welcome ${username}`}</h1>}
           {createPortal(
             <button className="dark-mode-btn" onClick={toggleDarkMode}>
               {!isDarkMode ? "🌙" : "🌞"}
@@ -43,7 +51,12 @@ const Layout = ({ children }) => {
         <footer>
           <p>
             {`<Designed by webcatdev`}
-            <span className="ninja-cat">🐱‍👤</span> {`/>`}
+            <span className="ninja-cat">
+              <a href="https://www.flaticon.com/free-icons/cat" target="_blank" rel="noopener noreferrer">
+                <CatIcon />
+              </a>
+            </span>
+            {`/>`}
           </p>
         </footer>
       </div>

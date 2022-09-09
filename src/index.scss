@@ -59,7 +59,6 @@ html[data-theme="dark"] {
 }
 
 body {
-
   min-height: 100vh;
   display: grid;
   place-items: center;
@@ -92,23 +91,25 @@ body {
     }
   }
 
-
   footer {
     p {
       padding: 0.5rem 0;
+      display: flex;
+      gap: 5px;
+      justify-content: center;
       text-align: center;
     }
 
     .ninja-cat {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  transform-origin: bottom;
-}
-p:hover .ninja-cat {
-  animation: bounce 1s infinite cubic-bezier(0.280, 0.840, 0.420, 1);
-}
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      transform-origin: bottom;
+    }
+    p:hover .ninja-cat {
+      animation: bounce 1s infinite cubic-bezier(0.28, 0.84, 0.42, 1);
+    }
   }
 }
 
@@ -123,11 +124,23 @@ p:hover .ninja-cat {
     padding: 0.5rem;
     list-style: none;
     height: 17rem;
+    overflow-y: auto;
   }
 
   li {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+
+    .todo-list-item-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .todo-description {
+      max-width: 35ch;
+      hyphens: auto;
+    }
 
     .todo-text,
     button {
@@ -225,7 +238,7 @@ p:hover .ninja-cat {
 }
 
 .modal {
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 1.2rem;
   font-weight: 600;
   background-color: var(--black-800);
@@ -235,8 +248,6 @@ p:hover .ninja-cat {
   right: -100%;
   z-index: 3;
 }
-
-
 
 @keyframes bounce {
   0% {

@@ -14,7 +14,8 @@ const TodoForm = () => {
   };
 
   return (
-    <form className="add-task-form" onSubmit={handleSubmit}>
+    <form
+    style={{wdith: '100%'}}  className="add-task-form" onSubmit={handleSubmit}>
       <TextField
         id="standard-basic"
         label="Your Task"
@@ -22,6 +23,7 @@ const TodoForm = () => {
         variant="standard"
         placeholder="Enter something to do"
         required
+        sx={{width: '100%'}}
       />
     </form>
   );
