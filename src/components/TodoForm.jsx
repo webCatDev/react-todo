@@ -1,21 +1,22 @@
 import { addTodo } from "../store/todoSlice";
 import { TextField } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { v4 } from "uuid";
-const uuid = v4;
 
 const TodoForm = () => {
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
     let todo = event.target.todo.value;
-    dispatch(addTodo({ id: uuid(), content: todo, isCompleted: false }));
+    dispatch(addTodo({ content: todo, isCompleted: false }));
     event.target.todo.value = "";
   };
 
   return (
     <form
-    style={{wdith: '100%'}}  className="add-task-form" onSubmit={handleSubmit}>
+      style={{ wdith: "100%" }}
+      className="add-task-form"
+      onSubmit={handleSubmit}
+    >
       <TextField
         id="standard-basic"
         label="Your Task"
@@ -23,7 +24,10 @@ const TodoForm = () => {
         variant="standard"
         placeholder="Enter something to do"
         required
-        sx={{width: '100%'}}
+        inputProps={{
+          minLength: 3,
+        }}
+        sx={{ width: "100%" }}
       />
     </form>
   );

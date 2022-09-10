@@ -11,14 +11,18 @@ import UpdateForm from "./UpdateForm";
 
 
 
-const TodoListItem = ({ todo, isEditing, setIsEditing }) => {
+const TodoListItem = ({
+  todo,
+  isEditing,
+  setIsEditing,
+  checkPageCountOnDelete,
+}) => {
   const [showFullText, setShowFullText] = useState({
     todoId: null,
     state: false,
   });
 
   const dispatch = useDispatch();
-
 
   const handleEdit = (id) =>
     setIsEditing({ state: !isEditing.state, todoId: id });
@@ -27,6 +31,11 @@ const TodoListItem = ({ todo, isEditing, setIsEditing }) => {
     isEditing.state === true && isEditing.todoId === todo.id;
 
   const isRevealed = showFullText.state && todo.id === showFullText.todoId;
+
+  const handleDelete = (todoId) => {
+    checkPageCountOnDelete()
+    dispatch(deleteTodo(todoId))
+  }
 
   return (
     <li className="todo-list-item">
@@ -45,7 +54,7 @@ const TodoListItem = ({ todo, isEditing, setIsEditing }) => {
           <button onClick={() => handleEdit(todo.id)}>{`${
             !isEditingCurrentTodo ? "Edit" : "Cancel"
           }`}</button>
-          <button onClick={() => dispatch(deleteTodo(todo.id))}>Delete</button>
+          <button onClick={() => handleDelete(todo.id)}>Delete</button>
         </div>
       </div>
       {isRevealed && <p className="todo-description">{todo.content}</p>}

@@ -3,9 +3,34 @@ import * as TodoAPI from "./todoAPI";
 
 const initialState = {
   data: [],
+  todoCounts: {
+    all: 0,
+    completed: 0,
+    uncompleted: 0,
+  },
   loading: false,
   error: "",
 };
+
+const pendingCb = (state) => {
+  state.error = "";
+  state.loading = true;
+};
+
+const rejectedCb = (state) => {
+  state.error = "Something went wrong while receiving data.";
+  state.loading = false;
+};
+
+const getCounts = (data) => {
+  const all = data.length;
+  const completed = data.filter((todo) => todo.isCompleted).length;
+  return {
+    all,
+    completed,
+    uncompleted: all - completed
+  }
+}
 
 export const todoSlice = createSlice({
   initialState,
@@ -13,61 +38,48 @@ export const todoSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     // get todos
-    builder.addCase(getTodos.pending, (state, action) => {
-      state.error = "";
-      state.loading = true;
-    });
+    builder.addCase(getTodos.pending, pendingCb);
+    builder.addCase(getTodos.rejected, rejectedCb);
     builder.addCase(getTodos.fulfilled, (state, action) => {
       state.data = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(getTodos.rejected, (state, action) => {
-      state.error = "Something went wrong while receiving data.";
+      state.todoCounts = getCounts(action.payload)
       state.loading = false;
     });
 
     // delete todo
 
-    builder.addCase(deleteTodo.pending, (state, action) => {
-      state.error = "";
-      state.loading = true;
-    });
+    builder.addCase(deleteTodo.rejected, rejectedCb);
+    builder.addCase(deleteTodo.pending, pendingCb);
+
     builder.addCase(deleteTodo.fulfilled, (state, action) => {
-      state.data = state.data.filter((todo) => todo.id !== action.payload.id);
-      state.loading = false;
-    });
-    builder.addCase(deleteTodo.rejected, (state, action) => {
-      state.error = "Something went wrong while receiving data.";
+      const todos = state.data.filter((todo) => todo.id !== action.payload.id);
+      state.data = todos
+      state.todoCounts = getCounts(todos)
       state.loading = false;
     });
 
     // add todo
-    builder.addCase(addTodo.pending, (state, action) => {
-      state.error = "";
-      state.loading = true;
-    });
+    builder.addCase(addTodo.rejected, rejectedCb);
+    builder.addCase(addTodo.pending, pendingCb);
+
     builder.addCase(addTodo.fulfilled, (state, action) => {
-      state.data = [...state.data, action.payload];
-      state.loading = false;
-    });
-    builder.addCase(addTodo.rejected, (state, action) => {
-      state.error = "Something went wrong while receiving data.";
+      const todos = [...state.data, action.payload]
+      state.data = todos;
+      state.todoCounts = getCounts(todos);
       state.loading = false;
     });
     // update todo
-    builder.addCase(updateTodo.pending, (state, action) => {
-      state.error = "";
-      state.loading = true;
-    });
+    builder.addCase(updateTodo.pending, pendingCb);
+    builder.addCase(updateTodo.rejected, rejectedCb);
+
     builder.addCase(updateTodo.fulfilled, (state, action) => {
-      const todoIndex = state.data.findIndex(
+      const todos = [...state.data]
+      const todoIndex = todos.findIndex(
         (todo) => todo.id === action.payload.id
       );
-      state.data[todoIndex] = action.payload;
-      state.loading = false;
-    });
-    builder.addCase(updateTodo.rejected, (state, action) => {
-      state.error = "Something went wrong while receiving data.";
+      todos[todoIndex] = action.payload;
+      state.data = todos
+      state.todoCounts = getCounts(todos);
       state.loading = false;
     });
   },

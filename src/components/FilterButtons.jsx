@@ -1,65 +1,61 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { uiActions } from "../store/uiSlice";
 
 const FilterButtons = ({ todos, setTodos, onActive }) => {
-  const [active, setActive] = useState("all");
+  const { todoCounts, activeTab} = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
 
-  const finishedTaskCount = todos.filter((todo) => todo.isCompleted).length;
-  const unfinishedTaskCount = todos.length - finishedTaskCount;
   const handleTooMuchTaskCount = (count) => (count > 9 ? "9+" : count);
 
   const handleClickAllTodos = () => {
     setTodos(todos);
-    setActive("all");
-    onActive("all");
+    dispatch(uiActions.changeActiveTab("all"));
   };
 
   const handleClickCompletedTodos = () => {
     setTodos(todos.filter((todo) => todo.isCompleted));
-    setActive("completed");
-    onActive("completed");
+    dispatch(uiActions.changeActiveTab("completed"));
   };
   const handleClickUnfinishedTodos = () => {
     setTodos(todos.filter((todo) => !todo.isCompleted));
-
-    setActive("uncompleted");
-    onActive("uncompleted");
+    dispatch(uiActions.changeActiveTab("uncompleted"));
   };
 
   return (
     <div className="filter-buttons">
       <Link to="/">
         <button
-          className={`all ${active === "all" ? "active" : ""}`}
+          className={`all ${activeTab === "all" ? "active" : ""}`}
           onClick={handleClickAllTodos}
         >
           All
           <span className="count all-todos-count">
-            {handleTooMuchTaskCount(todos.length)}
+            {handleTooMuchTaskCount(todoCounts.all)}
           </span>
         </button>
       </Link>
 
       <Link to="/">
         <button
-          className={`completed ${active === "completed" ? "active" : ""}`}
+          className={`completed ${activeTab === "completed" ? "active" : ""}`}
           onClick={handleClickCompletedTodos}
         >
           Completed
           <span className="count completed-todos-count">
-            {handleTooMuchTaskCount(finishedTaskCount)}
+            {handleTooMuchTaskCount(todoCounts.completed)}
           </span>
         </button>
       </Link>
-      
+
       <Link to="/">
         <button
-          className={`uncompleted ${active === "uncompleted" ? "active" : ""}`}
+          className={`uncompleted ${activeTab === "uncompleted" ? "active" : ""}`}
           onClick={handleClickUnfinishedTodos}
         >
           Uncompleted
           <span className="count uncompleted-todos-count">
-            {handleTooMuchTaskCount(unfinishedTaskCount)}
+            {handleTooMuchTaskCount(todoCounts.uncompleted)}
           </span>
         </button>
       </Link>

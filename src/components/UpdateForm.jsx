@@ -3,8 +3,7 @@ import { updateTodo } from "../store/todoSlice";
 import { useDispatch } from "react-redux";
 
 const UpdateForm = ({ setIsEditing, todo }) => {
-    
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
   return (
     <div>
       <form
@@ -20,7 +19,12 @@ const UpdateForm = ({ setIsEditing, todo }) => {
           setIsEditing((prevState) => ({ ...prevState, state: false }));
         }}
       >
-        <TextField defaultValue={todo.content} name="content" required />
+        <TextField
+          defaultValue={todo.content}
+          name="content"
+          required
+          inputProps={{ minLength: 3 }}
+        />
       </form>
     </div>
   );

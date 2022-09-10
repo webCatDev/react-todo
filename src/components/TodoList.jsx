@@ -7,76 +7,85 @@ import FilterButtons from "./FilterButtons";
 import TodoNotifications from "./TodoNotifications";
 
 import { Pagination, PaginationItem } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ITEM_PER_PAGE } from "../config";
 
-import {gsap} from 'gsap'
+import { gsap } from "gsap";
 import Modal from "./Modal";
 import { createPortal } from "react-dom";
 
 const TodoList = () => {
+  const { todoCounts, data: todos } = useSelector((state) => state.todos);
+
+  const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   const page = parseInt(query.get("page") || "1", 10);
 
-  const todos = useSelector((state) => state.todos);
-  const [filteredTodos, setFilteredTodos] = useState(todos.data);
+  const [filteredTodos, setFilteredTodos] = useState(todos);
   const dispatch = useDispatch();
 
-  const [active, setActive] = useState("all");
+  const {activeTab} =  useSelector(state => state.ui)
   const [isEditing, setIsEditing] = useState({ todoId: null, state: false });
 
-
   const todoListRef = useRef();
-  const qsa = useMemo(()=> gsap.utils.selector(todoListRef), [todoListRef])
-
-   
-  
-  useEffect(() => {
-      gsap.from(qsa(".todo-list-item"), {
-        x: -20,
-        opacity: 0,
-        stagger: 0.1,
-      });
-  }, [active, page, qsa]);
+  const qsa = useMemo(() => gsap.utils.selector(todoListRef), [todoListRef]);
 
   useEffect(() => {
-    switch (active) {
+    gsap.from(qsa(".todo-list-item"), {
+      x: -20,
+      opacity: 0,
+      stagger: 0.1,
+    });
+  }, [activeTab, page, qsa]);
+
+  useEffect(() => {
+    switch (activeTab) {
       case "all":
-        setFilteredTodos(todos.data);
+        setFilteredTodos(todos);
         break;
       case "completed":
-        setFilteredTodos(todos.data.filter((todo) => todo.isCompleted));
+        setFilteredTodos(todos.filter((todo) => todo.isCompleted));
         break;
       case "uncompleted":
-        setFilteredTodos(todos.data.filter((todo) => !todo.isCompleted));
+        setFilteredTodos(todos.filter((todo) => !todo.isCompleted));
         break;
       default:
-        setFilteredTodos(todos.data);
+        setFilteredTodos(todos);
     }
-  }, [todos.data, active]);
+  }, [todos, activeTab]);
 
   useEffect(() => {
     dispatch(getTodos());
   }, [dispatch]);
 
+  const handlePageTransitionOnDelete = () => {
+    if ((todoCounts[activeTab] - 1) % ITEM_PER_PAGE === 0) {
+      navigate(`/?page=${Math.floor(todoCounts[activeTab] / ITEM_PER_PAGE)}`);
+    }
+  };
+
   return (
     <div className="todo-container">
+      {/* Filter Buttons */}
       <FilterButtons
-        onActive={setActive}
-        todos={todos.data}
+        todos={todos}
         setTodos={setFilteredTodos}
       />
+      {/* Notification Modal(error & loading) */}
       {createPortal(
         <Modal todos={todos}>
           <TodoNotifications todos={todos} />
-        </Modal>, document.body
+        </Modal>,
+        document.body
       )}
+      {/* Todo List */}
       <ul ref={todoListRef}>
         {filteredTodos
           .slice((page - 1) * ITEM_PER_PAGE, page * ITEM_PER_PAGE)
           .map((todo) => (
             <TodoListItem
+              checkPageCountOnDelete={handlePageTransitionOnDelete}
               isEditing={isEditing}
               setIsEditing={setIsEditing}
               key={todo.id}
