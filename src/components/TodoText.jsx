@@ -1,36 +1,58 @@
-import { updateTodo } from "../store/todoSlice";
-import { useDispatch } from "react-redux";
+import { updateTodo } from '../store/todoSlice';
+import { useDispatch } from 'react-redux';
+import { TodoTextMaxLength } from '../config';
+import DoneIcon from './DoneIcon';
+import UndoneIcon from './UndoneIcon';
 
-const TodoText = ({ todo, setShowFullText, showFullText}) => {
+const TodoText = ({ todo, setShowFullText, showFullText }) => {
   const dispatch = useDispatch();
-  const handleClick = () => {
-    console.log('hereeee');
-    if (todo.content.length > 13) {
-      setShowFullText({state: !showFullText.state, todoId: todo.id})
+
+  const isContentLengthGreaterThanMaxLength =
+    todo.content.length > TodoTextMaxLength;
+  
+  const doneButtonText = todo.isCompleted ? <UndoneIcon /> : <DoneIcon/>;
+  const todoText =
+   isContentLengthGreaterThanMaxLength
+      ? `${todo.content.slice(0, TodoTextMaxLength)}... `
+      : todo.content;
+
+  const handleClickTodoText = () => {
+    if (isContentLengthGreaterThanMaxLength) {
+      setShowFullText({ state: !showFullText.state, todoId: todo.id });
     }
   };
 
+  const handleClickDoneButton = () => dispatch(
+            updateTodo({
+              todoId: todo.id,
+              todo: { ...todo, isCompleted: !todo.isCompleted },
+            })
+          )
+
+  const label =
+    isContentLengthGreaterThanMaxLength && 'click to reveal long texts';
+
+  const completedStyles = {
+    textDecoration: `${todo.isCompleted ? 'line-through' : ''}`,
+    opacity: `${todo.isCompleted ? 0.5 : 1}`,
+  };
+  
   return (
-    <span
-      title="click to reveal long texts && double click for mark as completed/uncompleted"
-      onClick={handleClick}
-      className="todo-text"
-      style={{
-        textDecoration: `${todo.isCompleted ? "line-through" : ""}`,
-      }}
-      onDoubleClick={() =>
-        dispatch(
-          updateTodo({
-            todoId: todo.id,
-            todo: { ...todo, isCompleted: !todo.isCompleted },
-          })
-        )
-      }
-    >
-      {todo.content.length > 13
-        ? `${todo.content.slice(0, 13)}... `
-        : todo.content}
-    </span>
+    <div className="todo">
+      <button className="done-button" onClick={handleClickDoneButton}>
+        {doneButtonText}
+      </button>
+
+      <span
+        title={label}
+        aria-label={label}
+        onClick={handleClickTodoText}
+        className="todo-text"
+        style={completedStyles}
+      >
+        {todoText}
+      </span>
+    </div>
   );
 };
 

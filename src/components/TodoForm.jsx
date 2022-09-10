@@ -13,7 +13,7 @@ const TodoForm = () => {
 
   return (
     <form
-      style={{ wdith: "100%" }}
+      style={{ width: "100%" }}
       className="add-task-form"
       onSubmit={handleSubmit}
     >

@@ -9,8 +9,6 @@ import { deleteTodo } from "../store/todoSlice";
 import TodoText from "./TodoText";
 import UpdateForm from "./UpdateForm";
 
-
-
 const TodoListItem = ({
   todo,
   isEditing,
@@ -33,23 +31,24 @@ const TodoListItem = ({
   const isRevealed = showFullText.state && todo.id === showFullText.todoId;
 
   const handleDelete = (todoId) => {
-    checkPageCountOnDelete()
-    dispatch(deleteTodo(todoId))
-  }
+    checkPageCountOnDelete();
+    dispatch(deleteTodo(todoId));
+  };
 
   return (
     <li className="todo-list-item">
       <div className="todo-list-item-info">
-        {isEditingCurrentTodo && (
+        
+        {isEditingCurrentTodo ? (
           <UpdateForm setIsEditing={setIsEditing} todo={todo} />
-        )}
-        {!isEditingCurrentTodo && (
+        ) : (
           <TodoText
             showFullText={showFullText}
             setShowFullText={setShowFullText}
             todo={todo}
           />
         )}
+
         <div>
           <button onClick={() => handleEdit(todo.id)}>{`${
             !isEditingCurrentTodo ? "Edit" : "Cancel"

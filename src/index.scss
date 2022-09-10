@@ -38,9 +38,10 @@ html {
   --buttons-color: var(--black-100);
 
   --selection-color: wheat;
+  --svg-color: var(--black-900);
 }
 
-html[data-theme="dark"] {
+html[data-theme='dark'] {
   --body-background-color: var(--black-900);
   --main-color: var(--white);
   --main-container-bg: var(--black-700);
@@ -56,6 +57,8 @@ html[data-theme="dark"] {
   --buttons-color: var(--white-100);
 
   --selection-color: cornflowerblue;
+
+  --svg-color: var(--white);
 }
 
 body {
@@ -63,9 +66,9 @@ body {
   display: grid;
   place-items: center;
   margin: 0;
-  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--body-background-color);
@@ -76,10 +79,34 @@ body {
   background-color: var(--selection-color);
 }
 
+svg {
+  color: var(--svg-color);
+}
+
 .main-container {
+  position: relative;
   background-color: var(--main-container-bg);
   padding: 2rem;
   max-width: 40rem;
+
+  .dark-mode-btn {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    right: 1rem;
+    top: 1rem;
+    opacity: 0.3;
+    border-radius: 100px;
+    border: 1px solid var(--black-100);
+    z-index: 2;
+    cursor: pointer;
+    transition: 500ms ease all;
+    background-color: var(--white-100);
+  }
+
+  .dark-mode-btn:hover {
+    opacity: 1;
+  }
 
   header {
     display: flex;
@@ -131,6 +158,12 @@ body {
     display: flex;
     flex-direction: column;
 
+    .todo {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+
     .todo-list-item-info {
       display: flex;
       justify-content: space-between;
@@ -157,6 +190,14 @@ body {
 
     button:hover {
       color: var(--buttons-hover-color);
+    }
+
+    .done-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin-right: 0.5rem;
     }
   }
 
@@ -215,26 +256,6 @@ body {
     height: 25px;
     padding: 5px;
   }
-}
-
-.dark-mode-btn {
-  position: fixed;
-  width: 36px;
-  height: 36px;
-  left: 50%;
-  bottom: 1%;
-  transform: translateX(-50%);
-  opacity: 0.3;
-  border-radius: 100px;
-  border: 1px solid var(--black-100);
-  z-index: 2;
-  cursor: pointer;
-  transition: 500ms ease all;
-  background-color: var(--white-100);
-}
-
-.dark-mode-btn:hover {
-  opacity: 1;
 }
 
 .modal {

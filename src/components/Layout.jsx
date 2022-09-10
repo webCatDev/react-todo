@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../store/uiSlice";
-import { createPortal } from "react-dom";
 
 import { ThemeProvider, createTheme } from "@mui/material";
 import UsernameForm from "./UsernameForm";
@@ -9,7 +8,7 @@ import CatIcon from "./CatIcon";
 
 const Layout = ({ children }) => {
   const { isDarkMode } = useSelector((state) => state.ui);
-  console.log(isDarkMode);
+ 
   const theme = createTheme({
     palette: {
       mode: isDarkMode ? "dark" : "light",
@@ -40,12 +39,10 @@ const [username, setUsername] = useState(initialState);
             <UsernameForm username={username} setUsername={setUsername} />
           )}
           {!!username && <h1>{`Welcome ${username}`}</h1>}
-          {createPortal(
+          
             <button className="dark-mode-btn" onClick={toggleDarkMode}>
               {!isDarkMode ? "🌙" : "🌞"}
-            </button>,
-            document.body
-          )}
+            </button>
         </header>
         <main>{children}</main>
         <footer>
