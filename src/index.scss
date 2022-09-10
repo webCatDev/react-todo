@@ -155,8 +155,6 @@ svg {
   }
 
   .todo-list-item {
-    display: flex;
-    flex-direction: column;
 
     &:first-child {
       margin-top: .5rem;
@@ -202,6 +200,7 @@ svg {
       opacity: 1;
       color: var(--buttons-hover-color);
     }
+
 
     .done-button {
       display: flex;

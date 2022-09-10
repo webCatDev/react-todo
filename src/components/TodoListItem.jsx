@@ -55,7 +55,7 @@ const TodoListItem = ({
           />
         )}
 
-        <div>
+        <div className='todo-action-buttons'>
           <button onClick={() => handleEdit(todo.id)}>
             {!isEditingCurrentTodo ? <EditIcon /> : <CancelIcon />}
           </button>
@@ -63,12 +63,12 @@ const TodoListItem = ({
             {<DeleteIcon />}
           </button>
         </div>
-        <AlertDialog
+        {open && <AlertDialog
           handleClose={handleClose}
           open={open}
           todo={todo}
           checkPageCountOnDelete={checkPageCountOnDelete}
-        />
+        />}
       </div>
       {isRevealed && <p className="todo-description">{todo.content}</p>}
     </li>

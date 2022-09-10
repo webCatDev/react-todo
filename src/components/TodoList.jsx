@@ -81,7 +81,7 @@ const TodoList = () => {
       )}
       {/* Todo List */}
       <ul ref={todoListRef}>
-        {filteredTodos
+        {[...filteredTodos].reverse()
           .slice((page - 1) * ITEM_PER_PAGE, page * ITEM_PER_PAGE)
           .map(todo => (
             <TodoListItem

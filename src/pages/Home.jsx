@@ -7,12 +7,19 @@ import {MemoryRouter, Route, Routes} from  'react-router-dom'
 const Home = () => {
   return (
     <Layout>
-      <TodoForm />
       <MemoryRouter initialEntries={['/']} initialIndex={0}>
-      <Routes>
-        <Route path="*" element={ <TodoList />} />
+        <Routes>
+          <Route
+            path="*"
+            element={
+              <>
+                <TodoForm />
+                <TodoList />
+              </>
+            }
+          />
         </Routes>
-        </MemoryRouter>
+      </MemoryRouter>
     </Layout>
   );
 };
