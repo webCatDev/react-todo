@@ -1,54 +1,57 @@
-import { getTodos } from "../store/todoSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef, useMemo } from "react";
+import { getTodos } from '../store/todoSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState, useRef, useMemo } from 'react';
 
-import TodoListItem from "./TodoListItem";
-import FilterButtons from "./FilterButtons";
-import TodoNotifications from "./TodoNotifications";
+import TodoListItem from './TodoListItem';
+import FilterButtons from './FilterButtons';
+import TodoNotifications from './TodoNotifications';
 
-import { Pagination, PaginationItem } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { ITEM_PER_PAGE } from "../config";
+import { Pagination, PaginationItem } from '@mui/material';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ITEM_PER_PAGE } from '../config';
 
-import { gsap } from "gsap";
-import Modal from "./Modal";
-import { createPortal } from "react-dom";
+import { gsap } from 'gsap';
+import Modal from './UI/Modal';
+import { createPortal } from 'react-dom';
 
 const TodoList = () => {
-  const { todoCounts, data: todos } = useSelector((state) => state.todos);
+  const { todoCounts, data: todos } = useSelector(state => state.todos);
 
   const navigate = useNavigate();
   const location = useLocation();
   const query = new URLSearchParams(location.search);
-  const page = parseInt(query.get("page") || "1", 10);
+  const page = parseInt(query.get('page') || '1', 10);
 
   const [filteredTodos, setFilteredTodos] = useState(todos);
   const dispatch = useDispatch();
 
-  const {activeTab} =  useSelector(state => state.ui)
+  const { activeTab } = useSelector(state => state.ui);
   const [isEditing, setIsEditing] = useState({ todoId: null, state: false });
 
   const todoListRef = useRef();
   const qsa = useMemo(() => gsap.utils.selector(todoListRef), [todoListRef]);
 
   useEffect(() => {
-    gsap.from(qsa(".todo-list-item"), {
-      x: -20,
-      opacity: 0,
-      stagger: 0.1,
-    });
+    const elements = qsa('.todo-list-item')
+    if (elements.length) {
+      gsap.from(elements, {
+        x: -20,
+        opacity: 0,
+        stagger: 0.1,
+      });
+    }
   }, [activeTab, page, qsa]);
 
   useEffect(() => {
     switch (activeTab) {
-      case "all":
+      case 'all':
         setFilteredTodos(todos);
         break;
-      case "completed":
-        setFilteredTodos(todos.filter((todo) => todo.isCompleted));
+      case 'completed':
+        setFilteredTodos(todos.filter(todo => todo.isCompleted));
         break;
-      case "uncompleted":
-        setFilteredTodos(todos.filter((todo) => !todo.isCompleted));
+      case 'uncompleted':
+        setFilteredTodos(todos.filter(todo => !todo.isCompleted));
         break;
       default:
         setFilteredTodos(todos);
@@ -68,10 +71,7 @@ const TodoList = () => {
   return (
     <div className="todo-container">
       {/* Filter Buttons */}
-      <FilterButtons
-        todos={todos}
-        setTodos={setFilteredTodos}
-      />
+      <FilterButtons todos={todos} setTodos={setFilteredTodos} />
       {/* Notification Modal(error & loading) */}
       {createPortal(
         <Modal todos={todos}>
@@ -83,7 +83,7 @@ const TodoList = () => {
       <ul ref={todoListRef}>
         {filteredTodos
           .slice((page - 1) * ITEM_PER_PAGE, page * ITEM_PER_PAGE)
-          .map((todo) => (
+          .map(todo => (
             <TodoListItem
               checkPageCountOnDelete={handlePageTransitionOnDelete}
               isEditing={isEditing}
@@ -97,14 +97,14 @@ const TodoList = () => {
         page={page}
         defaultPage={1}
         count={Math.ceil(filteredTodos.length / ITEM_PER_PAGE)}
-        renderItem={(item) => (
+        renderItem={item => (
           <PaginationItem
             component={Link}
-            to={`/${item.page === 1 ? "" : `?page=${item.page}`}`}
+            to={`/${item.page === 1 ? '' : `?page=${item.page}`}`}
             {...item}
           />
         )}
-      />{" "}
+      />{' '}
     </div>
   );
 };

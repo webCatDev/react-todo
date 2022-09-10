@@ -2,9 +2,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { uiActions } from "../store/uiSlice";
 
-const FilterButtons = ({ todos, setTodos, onActive }) => {
-  const { todoCounts, activeTab} = useSelector((state) => state.todos);
+const FilterButtons = ({ todos, setTodos }) => {
+  const { todoCounts} = useSelector((state) => state.todos);
+  const {  activeTab} = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+
+  
 
   const handleTooMuchTaskCount = (count) => (count > 9 ? "9+" : count);
 

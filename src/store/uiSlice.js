@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
-  isDarkMode: false,
+  isDarkMode: JSON.parse(localStorage.getItem('darkMode')) === null ? true : false,
   activeTab: 'all'
 };
 export const uiSlice = createSlice({
@@ -8,6 +8,7 @@ export const uiSlice = createSlice({
   initialState,
   reducers: {
     changeTheme(state) {
+      localStorage.setItem('darkMode', !state.isDarkMode);
       state.isDarkMode = !state.isDarkMode;
     },
     changeActiveTab(state, action) {

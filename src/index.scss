@@ -154,9 +154,17 @@ svg {
     overflow-y: auto;
   }
 
-  li {
+  .todo-list-item {
     display: flex;
     flex-direction: column;
+
+    &:first-child {
+      margin-top: .5rem;
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
 
     .todo {
       flex: 1;
@@ -183,12 +191,15 @@ svg {
     button {
       background-color: transparent;
       border: none;
-      padding: 1em 2em;
-
       color: var(--buttons-color);
+      opacity: .9;
+      &:last-child {
+        margin-left:1rem ;
+      }
     }
 
     button:hover {
+      opacity: 1;
       color: var(--buttons-hover-color);
     }
 

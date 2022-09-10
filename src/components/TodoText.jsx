@@ -1,8 +1,8 @@
 import { updateTodo } from '../store/todoSlice';
 import { useDispatch } from 'react-redux';
 import { TodoTextMaxLength } from '../config';
-import DoneIcon from './DoneIcon';
-import UndoneIcon from './UndoneIcon';
+import DoneIcon from './Icons/DoneIcon';
+import UndoneIcon from './Icons/UndoneIcon';
 
 const TodoText = ({ todo, setShowFullText, showFullText }) => {
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const TodoText = ({ todo, setShowFullText, showFullText }) => {
           )
 
   const label =
-    isContentLengthGreaterThanMaxLength && 'click to reveal long texts';
+    isContentLengthGreaterThanMaxLength ? 'click to reveal long texts' : '';
 
   const completedStyles = {
     textDecoration: `${todo.isCompleted ? 'line-through' : ''}`,

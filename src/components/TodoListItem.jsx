@@ -1,13 +1,17 @@
 // hooks
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from 'react';
 
-// action creators
-import { deleteTodo } from "../store/todoSlice";
+
+// icons
+
+import CancelIcon from './Icons/CancelIcon';
+import DeleteIcon from './Icons/DeleteIcon';
+import EditIcon from './Icons/EditIcon';
 
 // components
-import TodoText from "./TodoText";
-import UpdateForm from "./UpdateForm";
+import TodoText from './TodoText';
+import AlertDialog from './UI/AlertDialog';
+import UpdateForm from './UpdateForm';
 
 const TodoListItem = ({
   todo,
@@ -15,14 +19,18 @@ const TodoListItem = ({
   setIsEditing,
   checkPageCountOnDelete,
 }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   const [showFullText, setShowFullText] = useState({
     todoId: null,
     state: false,
   });
 
-  const dispatch = useDispatch();
-
-  const handleEdit = (id) =>
+  const handleEdit = id =>
     setIsEditing({ state: !isEditing.state, todoId: id });
 
   const isEditingCurrentTodo =
@@ -30,15 +38,13 @@ const TodoListItem = ({
 
   const isRevealed = showFullText.state && todo.id === showFullText.todoId;
 
-  const handleDelete = (todoId) => {
-    checkPageCountOnDelete();
-    dispatch(deleteTodo(todoId));
+  const handleDelete = () => {
+    setOpen(true);
   };
 
   return (
     <li className="todo-list-item">
       <div className="todo-list-item-info">
-        
         {isEditingCurrentTodo ? (
           <UpdateForm setIsEditing={setIsEditing} todo={todo} />
         ) : (
@@ -50,11 +56,19 @@ const TodoListItem = ({
         )}
 
         <div>
-          <button onClick={() => handleEdit(todo.id)}>{`${
-            !isEditingCurrentTodo ? "Edit" : "Cancel"
-          }`}</button>
-          <button onClick={() => handleDelete(todo.id)}>Delete</button>
+          <button onClick={() => handleEdit(todo.id)}>
+            {!isEditingCurrentTodo ? <EditIcon /> : <CancelIcon />}
+          </button>
+          <button onClick={() => handleDelete(todo.id)}>
+            {<DeleteIcon />}
+          </button>
         </div>
+        <AlertDialog
+          handleClose={handleClose}
+          open={open}
+          todo={todo}
+          checkPageCountOnDelete={checkPageCountOnDelete}
+        />
       </div>
       {isRevealed && <p className="todo-description">{todo.content}</p>}
     </li>

@@ -1,6 +1,6 @@
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
-import Layout from "../components/Layout";
+import Layout from "../components/UI/Layout";
 
 import {MemoryRouter, Route, Routes} from  'react-router-dom'
 
