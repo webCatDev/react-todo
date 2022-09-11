@@ -83,6 +83,12 @@ svg {
   color: var(--svg-color);
 }
 
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 .main-container {
   position: relative;
   background-color: var(--main-container-bg);
@@ -96,12 +102,12 @@ svg {
     right: 1rem;
     top: 1rem;
     opacity: 0.3;
-    border-radius: 100px;
     border: 1px solid var(--black-100);
     z-index: 2;
     cursor: pointer;
     transition: 500ms ease all;
-    background-color: var(--white-100);
+    background-color: transparent;
+    border: none;
   }
 
   .dark-mode-btn:hover {
@@ -155,9 +161,8 @@ svg {
   }
 
   .todo-list-item {
-
     &:first-child {
-      margin-top: .5rem;
+      margin-top: 0.5rem;
     }
 
     &:not(:last-child) {
@@ -190,9 +195,9 @@ svg {
       background-color: transparent;
       border: none;
       color: var(--buttons-color);
-      opacity: .9;
+      opacity: 0.9;
       &:last-child {
-        margin-left:1rem ;
+        margin-left: 1rem;
       }
     }
 
@@ -200,7 +205,6 @@ svg {
       opacity: 1;
       color: var(--buttons-hover-color);
     }
-
 
     .done-button {
       display: flex;

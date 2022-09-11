@@ -1,4 +1,4 @@
-// https://www.flaticon.com/free-icon/remove_1828599?term=x&related_id=1828599
+// https://www.flaticon.com/free-icon/remove_1828599
 const CancelIcon = () => {
   return (
     <svg width="24" height="24" x="0" y="0" viewBox="0 0 512 512">

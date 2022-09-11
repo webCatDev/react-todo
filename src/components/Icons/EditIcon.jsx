@@ -1,4 +1,4 @@
-// https://www.flaticon.com/free-icon/pencil_2280532?term=edit&page=1&position=69&page=1&position=69&related_id=2280532&origin=search
+// https://www.flaticon.com/free-icon/pencil_2280532
 const EditIcon = () => {
   return (
     <svg width="24" height="24" x="0" y="0" viewBox="0 0 512 512">

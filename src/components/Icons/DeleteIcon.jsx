@@ -1,4 +1,4 @@
-// https://www.flaticon.com/free-icon/delete_4442016?term=delete&page=1&position=22&page=1&position=22&related_id=4442016&origin=search
+// https://www.flaticon.com/free-icon/delete_4442016
 const DeleteIcon = () => {
   return (
     <svg

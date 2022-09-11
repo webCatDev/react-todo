@@ -5,6 +5,8 @@ import { uiActions } from "../../store/uiSlice";
 import { ThemeProvider, createTheme } from "@mui/material";
 import UsernameForm from "../UsernameForm";
 import CatIcon from "../Icons/CatIcon";
+import SunIcon from "../Icons/SunIcon";
+import MoonIcon from "../Icons/MoonIcon";
 
 const Layout = ({ children }) => {
   const { isDarkMode } = useSelector((state) => state.ui);
@@ -42,7 +44,7 @@ const [username, setUsername] = useState(initialState);
           {!!username && <h1>{`Welcome ${username}`}</h1>}
           
             <button className="dark-mode-btn" onClick={toggleDarkMode}>
-              {!isDarkMode ? "🌙" : "🌞"}
+              {!isDarkMode ? <MoonIcon/> : <SunIcon/>}
             </button>
         </header>
         <main>{children}</main>

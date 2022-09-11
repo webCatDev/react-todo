@@ -1,4 +1,4 @@
-// https://www.flaticon.com/free-icon/success_3633357?term=done&related_id=3633357
+// https://www.flaticon.com/free-icon/success_3633357
 const UndoneIcon = () => {
   return (
     <svg

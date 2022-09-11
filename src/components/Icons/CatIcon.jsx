@@ -1,3 +1,4 @@
+// https://www.flaticon.com/free-icon/cool_2171948
 const CatIcon = () => {
   return (
     <svg width="24" height="24" x="0" y="0" viewBox="0 0 512 512">
