@@ -1,12 +1,14 @@
 import { updateTodo } from '../store/todoSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { TodoTextMaxLength } from '../config';
 import DoneIcon from './Icons/DoneIcon';
 import UndoneIcon from './Icons/UndoneIcon';
 
 const TodoText = ({ todo, setShowFullText, showFullText }) => {
+  const { loading } = useSelector(state => state.todos);
   const dispatch = useDispatch();
 
+  
   const isContentLengthGreaterThanMaxLength =
     todo.content.length > TodoTextMaxLength;
   
@@ -22,12 +24,15 @@ const TodoText = ({ todo, setShowFullText, showFullText }) => {
     }
   };
 
-  const handleClickDoneButton = () => dispatch(
+  const handleClickDoneButton = () => {
+    if (loading) return;
+    console.count('clicked')
+    dispatch(
             updateTodo({
               todoId: todo.id,
               todo: { ...todo, isCompleted: !todo.isCompleted },
             })
-          )
+          )}
 
   const label =
     isContentLengthGreaterThanMaxLength ? 'click to reveal long texts' : '';

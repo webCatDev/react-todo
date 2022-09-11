@@ -10,9 +10,12 @@ const TodoForm = () => {
   const [error, setError] = useState(true)
   const [touched, setTouched] = useState(false)
 
+  
+
   const navigate = useNavigate()
   const dispatch = useDispatch();
   const handleSubmit = (event) => {
+    
     event.preventDefault();
     let todo = event.target.todo.value;
     dispatch(addTodo({ content: todo, isCompleted: false }));

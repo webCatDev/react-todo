@@ -4,15 +4,12 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 
 import TodoListItem from './TodoListItem';
 import FilterButtons from './FilterButtons';
-import TodoNotifications from './TodoNotifications';
 
 import { Pagination, PaginationItem } from '@mui/material';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ITEM_PER_PAGE } from '../config';
 
 import { gsap } from 'gsap';
-import Modal from './UI/Modal';
-import { createPortal } from 'react-dom';
 
 const TodoList = () => {
   const { todoCounts, data: todos } = useSelector(state => state.todos);
@@ -72,13 +69,7 @@ const TodoList = () => {
     <div className="todo-container">
       {/* Filter Buttons */}
       <FilterButtons todos={todos} setTodos={setFilteredTodos} />
-      {/* Notification Modal(error & loading) */}
-      {createPortal(
-        <Modal todos={todos}>
-          <TodoNotifications todos={todos} />
-        </Modal>,
-        document.body
-      )}
+    
       {/* Todo List */}
       <ul ref={todoListRef}>
         {[...filteredTodos].reverse()

@@ -46,12 +46,14 @@ html[data-theme='dark'] {
   --main-color: var(--white);
   --main-container-bg: var(--black-700);
 
-  --task-all-bg: #06b0c7e8;
   --task-all-color: var(--white);
-  --task-completed-bg: #37c42bf5;
   --task-completed-color: var(--white);
-  --task-uncompleted-bg: #df2525;
   --task-uncompleted-color: var(--white);
+
+  --task-all-bg: #06b0c7e8;
+  --task-completed-bg: #37c42bf5;
+  --task-uncompleted-bg: #df2525;
+
   --task-count-bg: var(--white-100);
   --buttons-hover-color: var(--white);
   --buttons-color: var(--white-100);
@@ -154,10 +156,30 @@ button {
 
 .todo-container {
   ul:not(.MuiPagination-ul) {
+    margin-top: 3px;
     padding: 0.5rem;
     list-style: none;
     height: 17rem;
-    overflow-y: auto;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: .5rem;
+    }
+    
+    /* Track */
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: var(--white-100);
+    }
+
+    /* Handle on hover */
+    &::-webkit-scrollbar-thumb:hover {
+      background: var(--black-100);
+    }
   }
 
   .todo-list-item {
@@ -182,8 +204,10 @@ button {
     }
 
     .todo-description {
-      max-width: 35ch;
+      padding: 0.5rem;
+      max-width: 30ch;
       hyphens: auto;
+      overflow-wrap: break-word;
     }
 
     .todo-text,
@@ -279,8 +303,8 @@ button {
   background-color: var(--black-800);
   color: var(--white);
   position: fixed;
-  top: 5vh;
-  right: -100%;
+  top: 5px;
+  right: 5px;
   z-index: 3;
 }
 
