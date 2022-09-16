@@ -24,9 +24,16 @@ const TodoForm = () => {
     navigate('/?page=1')
   };
 
-  const handleFocus = () => setTouched(true)
+ 
   const handleBlur = () => setTouched(false)
-  const handleOnchange = ({target:{value}}) => value.trim().length < 3 ? setError(true) : setError(false)
+   const handleOnchange = ({ target: { value } }) => {
+     if (!value.trim()) {
+       return;
+     }
+     value.length > 0 ? setTouched(true) : setTouched(false);
+
+     value.length < 3 ? setError(true) : setError(false);
+   };
 
   return (
     <form
@@ -35,7 +42,6 @@ const TodoForm = () => {
       onSubmit={handleSubmit}
     >
       <OutlinedInput
-        onFocus={handleFocus}
         onBlur={handleBlur}
         onChange={handleOnchange}
         error={touched && error ? true : false} 

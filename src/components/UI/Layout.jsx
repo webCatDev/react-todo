@@ -58,7 +58,7 @@ const Layout = ({ children }) => {
             {!isDarkMode ? <MoonIcon /> : <SunIcon />}
           </button>
         </header>
-        <main>{children}</main>
+        { username && <main>{ children }</main> }
         <footer>
           <p>
             {`<Designed by webcatdev`}

@@ -18,10 +18,16 @@ const UsernameForm = ({ username, setUsername }) => {
     localStorage.setItem('username', username);
   };
 
-  const handleFocus = () => setTouched(true);
+  
   const handleBlur = () => setTouched(false);
-  const handleOnchange = ({ target: { value } }) =>
-    value.trim().length < 3 ? setError(true) : setError(false);
+  const handleOnchange = ({ target: { value } }) => {
+    if (!value.trim()) {
+      return;
+    }
+    value.length > 0 ? setTouched(true): setTouched(false)
+
+    value.length < 3 ? setError(true) : setError(false);
+  }
 
   return (
     <form
@@ -31,14 +37,13 @@ const UsernameForm = ({ username, setUsername }) => {
     >
       <OutlinedInput
         id="name"
-        onFocus={handleFocus}
         onBlur={handleBlur}
         onChange={handleOnchange}
         error={touched && error ? true : false}
         name="username"
         type="text"
         defaultValue={username}
-        inputProps={{ minLength: 3, maxLength: 12, 'aria-label': 'your name' }}
+        inputProps={{ minLength: 3, maxLength: 11, 'aria-label': 'your name' }}
         endAdornment={
           <InputAdornment position="end">
             <button>
@@ -47,7 +52,7 @@ const UsernameForm = ({ username, setUsername }) => {
           </InputAdornment>
         }
         required
-        placeholder="Please enter your name"
+        placeholder="Enter your name"
         sx={{ width: '100%' }}
       />
     </form>
