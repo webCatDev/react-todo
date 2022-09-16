@@ -1,8 +1,8 @@
 import {  OutlinedInput, InputAdornment } from "@mui/material";
 import { updateTodo } from "../store/todoSlice";
 import { useDispatch } from "react-redux";
-import SubmitIcon from "./Icons/SubmitIcon";
 import { useState } from "react";
+import ConfirmIcon from "./Icons/ConfirmIcon";
 
 const UpdateForm = ({ setIsEditing, todo }) => {
   const dispatch = useDispatch();
@@ -37,14 +37,14 @@ const UpdateForm = ({ setIsEditing, todo }) => {
           endAdornment={
             <InputAdornment position="end">
               <button>
-                <SubmitIcon />
+                <ConfirmIcon />
               </button>
             </InputAdornment>
           }
           defaultValue={todo.content}
           name="content"
           required
-          inputProps={{ minLength: 3 }}
+          inputProps={{ minLength: 3,  'aria-label': 'edit task'}}
         />
       </form>
     </div>

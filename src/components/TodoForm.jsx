@@ -3,8 +3,8 @@ import { OutlinedInput, InputAdornment } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { uiActions } from "../store/uiSlice";
 import {useNavigate} from 'react-router-dom'
-import SubmitIcon from "./Icons/SubmitIcon";
 import { useState } from "react";
+import AddIcon from "./Icons/AddIcon";
 
 const TodoForm = () => {
   const [error, setError] = useState(true)
@@ -51,7 +51,7 @@ const TodoForm = () => {
         endAdornment={
           <InputAdornment position="end">
             <button>
-              <SubmitIcon />
+             <AddIcon />
             </button>
           </InputAdornment>
         }

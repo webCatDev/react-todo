@@ -40,7 +40,7 @@ const TodoText = ({ todo, setShowFullText, showFullText }) => {
   const completedStyles = {
     textDecoration: `${todo.isCompleted ? 'line-through' : ''}`,
     opacity: `${todo.isCompleted ? 0.5 : 1}`,
-  };
+  }
   
   return (
     <div className="todo">
