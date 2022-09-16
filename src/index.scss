@@ -1,3 +1,16 @@
+
+
+@mixin phone {
+  @media screen and (min-width: 30em) {
+    @content;
+  }
+}
+@mixin tablet {
+  @media screen and (min-width: 48em) {
+    @content;
+  }
+}
+
 *,
 *::before,
 *::after {
@@ -39,6 +52,11 @@ html {
 
   --selection-color: wheat;
   --svg-color: var(--black-900);
+
+  font-size: 80%;
+  @include phone() {
+    font-size: 100%;
+  }
 }
 
 html[data-theme='dark'] {
@@ -94,8 +112,16 @@ button {
 .main-container {
   position: relative;
   background-color: var(--main-container-bg);
-  padding: 2rem;
+  padding: 1rem;
+  width: 100%;
   max-width: 40rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+
+  @include phone {
+    padding: 2rem;
+  }
 
   .dark-mode-btn {
     position: absolute;
@@ -163,9 +189,9 @@ button {
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
-      width: .5rem;
+      width: 0.5rem;
     }
-    
+
     /* Track */
     &::-webkit-scrollbar-track {
       border-radius: 10px;

@@ -29,7 +29,7 @@ const FilterButtons = ({ todos, setTodos }) => {
     <div className="filter-buttons">
       <Link to="/">
         <button
-          className={`all ${activeTab === "all" ? "active" : ""}`}
+          className={`all ${activeTab === 'all' ? 'active' : ''}`}
           onClick={handleClickAllTodos}
         >
           All
@@ -41,7 +41,7 @@ const FilterButtons = ({ todos, setTodos }) => {
 
       <Link to="/">
         <button
-          className={`completed ${activeTab === "completed" ? "active" : ""}`}
+          className={`completed ${activeTab === 'completed' ? 'active' : ''}`}
           onClick={handleClickCompletedTodos}
         >
           Completed
@@ -53,10 +53,12 @@ const FilterButtons = ({ todos, setTodos }) => {
 
       <Link to="/">
         <button
-          className={`uncompleted ${activeTab === "uncompleted" ? "active" : ""}`}
+          className={`uncompleted ${
+            activeTab === 'uncompleted' ? 'active' : ''
+          }`}
           onClick={handleClickUnfinishedTodos}
         >
-          Uncompleted
+          Active
           <span className="count uncompleted-todos-count">
             {handleTooMuchTaskCount(todoCounts.uncompleted)}
           </span>
